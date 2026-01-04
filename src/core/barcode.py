@@ -2,6 +2,7 @@ import requests
 from pyzbar.pyzbar import decode
 import numpy as np
 
+
 def detect_barcode(image):
     image_np = np.array(image)
     decoded = decode(image_np)

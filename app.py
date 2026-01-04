@@ -1,15 +1,25 @@
 import streamlit as st
 from PIL import Image
-from ocr import extract_text_from_image
-from barcode import fetch_product_from_barcode
-from context_builder import build_context
-from product_preview import extract_product_preview
-from reasoner import reason
+from src.core.ocr import extract_text_from_image
+from src.core.barcode import fetch_product_from_barcode
+from src.core.product_preview import extract_product_preview
+from src.context.builder import build_context
+from src.context.memory import ConversationMemory
+from src.reasoning.chains import reason
+from src.ui.components import (
+    render_product_card,
+    render_conversation_history,
+    render_preference_panel
+)
 
 st.set_page_config(page_title="Food, Explained", layout="centered")
 
+memory = ConversationMemory()
+
 st.title("Food, Explained")
 st.caption("An AI assistant to help you understand food")
+
+render_preference_panel(memory)
 
 uploaded_image = st.file_uploader(
     "Upload the back of a food product",
@@ -47,33 +57,21 @@ if analyze:
         context = build_context(
             product_data=product_data,
             ocr_text=extracted_text,
-            user_query=user_query
+            user_query=user_query,
+            memory=memory
         )
 
-        preview = extract_product_preview(context)
+        preview = extract_product_preview(context.model_dump())
 
         if preview:
-            st.subheader(preview["title"])
-
-            if preview.get("name"):
-                st.write(f"Name: {preview['name']}")
-
-            if preview.get("brand"):
-                st.write(f"Brand: {preview['brand']}")
-
-            if preview.get("ingredients"):
-                with st.expander("Ingredients (from label)"):
-                    st.write(preview["ingredients"])
-
-            if preview["confidence"] == "high":
-                st.caption("Confidence: High (barcode verified)")
-            elif preview["confidence"] == "medium":
-                st.caption("Confidence: Medium (label text detected)")
-            else:
-                st.caption("Confidence: Low (could not reliably extract details)")
-
+            render_product_card(preview)
 
         answer = reason(context)
 
+        memory.add_message("user", user_query if user_query else "Analyze this product")
+        memory.add_message("assistant", answer)
+
         st.subheader("Response")
         st.write(answer)
+
+        render_conversation_history(memory)

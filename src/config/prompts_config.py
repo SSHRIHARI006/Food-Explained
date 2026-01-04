@@ -1,13 +1,3 @@
-import os
-from anthropic import Anthropic
-from dotenv import load_dotenv
-
-load_dotenv()
-
-client = Anthropic(
-    api_key=os.getenv("ANTHROPIC_API_KEY")
-)
-
 SYSTEM_PROMPT = """
 You are an AI assistant that helps people think clearly about food.
 
@@ -26,14 +16,7 @@ Response format:
 You are not a doctor. Do not give medical advice.
 """
 
-
-def reason(context):
-    source = context.get("source", "unknown")
-    confidence = context.get("confidence", "low")
-    raw_text = context.get("raw_text", "")
-    user_query = context.get("user_query", "")
-
-    prompt = f"""
+EXPLANATION_TEMPLATE = """
 Context source: {source}
 Confidence level: {confidence}
 
@@ -41,7 +24,7 @@ Product information:
 {raw_text}
 
 User question:
-{user_query if user_query else "None"}
+{user_query}
 
 Task:
 Respond using the following Markdown structure:
@@ -61,13 +44,44 @@ Give a realistic, everyday way to think about or consume this food.
 If information is incomplete, say so calmly.
 """
 
-    response = client.messages.create(
-        model="claude-3-haiku-20240307",
-        max_tokens=500,
-        system=SYSTEM_PROMPT,
-        messages=[
-            {"role": "user", "content": prompt}
-        ]
-    )
+COMPARISON_TEMPLATE = """
+Context source: {source}
+Confidence level: {confidence}
 
-    return response.content[0].text
+Products being compared:
+{raw_text}
+
+User question:
+{user_query}
+
+Task:
+Compare these products using the following structure:
+
+## Key differences
+What makes these products different from each other.
+
+## What to consider
+Context-dependent factors that matter for choosing between them.
+
+## Practical takeaway
+Simple guidance based on use case, frequency, or preference.
+
+Avoid declaring winners. Focus on trade-offs.
+"""
+
+FOLLOWUP_TEMPLATE = """
+Context source: {source}
+Confidence level: {confidence}
+
+Product information:
+{raw_text}
+
+Previous conversation:
+{conversation_history}
+
+Current question:
+{user_query}
+
+Task:
+Answer the follow-up question using previous context. Keep the response focused and practical.
+"""

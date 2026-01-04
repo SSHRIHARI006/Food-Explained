@@ -1,15 +1,17 @@
 [project]
 name = "friendlyfood"
-version = "0.1.0"
-description = "Add your description here"
+version = "0.2.0"
+description = "AI food assistant to help understand food in context"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "anthropic>=0.75.0",
     "easyocr>=1.7.2",
     "langchain>=1.2.0",
+    "langchain-anthropic>=0.1.0",
     "numpy>=2.4.0",
     "pillow>=12.1.0",
+    "pydantic>=2.0.0",
     "python-dotenv>=1.2.1",
     "pyzbar>=0.1.9",
     "requests>=2.32.5",
