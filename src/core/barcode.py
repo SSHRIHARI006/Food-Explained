@@ -1,9 +1,17 @@
 import requests
-from pyzbar.pyzbar import decode
 import numpy as np
+
+try:
+    from pyzbar.pyzbar import decode
+    PYZBAR_AVAILABLE = True
+except ImportError:
+    PYZBAR_AVAILABLE = False
 
 
 def detect_barcode(image):
+    if not PYZBAR_AVAILABLE:
+        return None
+    
     image_np = np.array(image)
     decoded = decode(image_np)
 
