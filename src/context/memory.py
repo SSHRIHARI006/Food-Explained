@@ -50,3 +50,6 @@ class ConversationMemory:
     
     def has_history(self) -> bool:
         return len(st.session_state.messages) > 0
+    
+    def has_history(self) -> bool:
+        return len(st.session_state.messages) > 0

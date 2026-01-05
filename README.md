@@ -1,48 +1,21 @@
 # Food, Explained
 
-An AI assistant that helps you understand food in context, not judge it.
+An AI assistant for understanding food products through conversational analysis.
 
 ## Overview
 
-Food, Explained is an intelligent food assistant designed to help users make informed decisions about what they eat. It explains ingredients, processes, and trade-offs without resorting to fear-mongering or oversimplified good/bad labels.
-
-## Core Philosophy
-
-This is an AI food assistant, not a food database or rating engine.
-
-The assistant:
-- Explains food in context
-- Avoids labeling foods as good, bad, healthy, or unhealthy
-- Focuses on dose, frequency, role, and trade-offs
-- Encourages practical, realistic decisions
-- Does not chase perfect eating
+Food, Explained analyzes food products from images or barcodes and provides contextual information through an interactive chat interface. The assistant maintains conversation history, allowing natural back-and-forth dialogue about products.
 
 ## Features
 
-### Multi-Modal Input
-- Upload images of food packaging labels
-- Manual barcode entry
-- Natural language questions
-
-### Product Recognition
-- OCR text extraction from product images
+- Image upload and OCR text extraction
 - Barcode lookup via OpenFoodFacts API
-- Explicit confidence levels for all data
-
-### Conversational Memory
-- Session-based conversation tracking
-- Follow-up question support
-- User dietary preferences and goals
-
-### Intelligent Reasoning
-- Query classification for targeted responses
-- Comparison mode for multiple products
-- Context-aware explanations
-- Powered by Claude via LangChain
+- Conversational interface with memory
+- Product preview cards with confidence indicators
+- User preference tracking
+- Follow-up question support with full context awareness
 
 ## Installation
-
-This project uses uv for dependency management.
 
 ```bash
 git clone https://github.com/yourusername/Food-Explained.git
@@ -54,7 +27,7 @@ uv pip install -e .
 
 ## Configuration
 
-Create a `.env` file in the project root:
+Create a `.env` file:
 
 ```
 ANTHROPIC_API_KEY=your_api_key_here
@@ -62,69 +35,54 @@ ANTHROPIC_API_KEY=your_api_key_here
 
 ## Usage
 
-Run the Streamlit application:
-
 ```bash
-.venv/bin/python -m streamlit run app.py
+streamlit run app.py
 ```
 
-The application will be available at `http://localhost:8501`
+Access at `http://localhost:8501`
+
+## Workflow
+
+1. Upload product image or enter barcode
+2. Receive initial analysis with product details
+3. Ask follow-up questions in the chat interface
+4. AI maintains context throughout conversation
+5. Set dietary preferences in sidebar for personalized responses
 
 ## Project Structure
 
 ```
 Food-Explained/
-├── app.py                 Main Streamlit application
+├── app.py
 ├── src/
-│   ├── config/           Configuration and prompts
-│   ├── context/          Context building and memory
-│   ├── core/             OCR, barcode, product preview
-│   ├── reasoning/        LangChain-based reasoning
-│   └── ui/               Reusable UI components
-└── pyproject.toml        Project dependencies
+│   ├── config/
+│   │   ├── prompts_config.py
+│   │   └── settings.py
+│   ├── context/
+│   │   ├── builder.py
+│   │   ├── memory.py
+│   │   └── schemas.py
+│   ├── core/
+│   │   ├── barcode.py
+│   │   ├── ocr.py
+│   │   └── product_preview.py
+│   ├── reasoning/
+│   │   └── chains.py
+│   └── ui/
+│       └── components.py
+└── pyproject.toml
 ```
-
-## How It Works
-
-1. User provides input via image, barcode, or text question
-2. System extracts product information with confidence tracking
-3. Context builder assembles all available data
-4. Query classifier determines response type
-5. LangChain chain generates contextual explanation
-6. Conversation memory enables follow-up questions
-
-## Key Principles
-
-- Facts are separated from interpretation
-- Barcode data is authoritative, LLM is for reasoning only
-- Confidence levels are always explicit
-- No hallucinated product names or details
-- Memory is session-scoped and opt-in
-- No autonomous agents or complex workflows
 
 ## Technology Stack
 
 - Python 3.12+
-- Streamlit for UI
-- EasyOCR for text extraction
-- OpenFoodFacts API for product data
-- Claude (Haiku) via Anthropic API
-- LangChain for prompt orchestration
-- Pydantic for data validation
-
-## Development
-
-The codebase is organized for clarity and maintainability:
-
-- Type-safe context objects using Pydantic
-- Modular UI components
-- Configurable prompts for different query types
-- Clean separation between data sources and reasoning
+- Streamlit
+- EasyOCR
+- OpenFoodFacts API
+- Claude via Anthropic API
+- LangChain
+- Pydantic
 
 ## License
 
 MIT
-
-## Contributing
-
-This project prioritizes simplicity and clarity. Contributions should maintain the core philosophy of explanation over judgment.
