@@ -1,10 +1,37 @@
 # Food, Explained
 
-An AI-powered assistant for understanding food products through conversational analysis.
+**Food, Explained exists because most food apps optimize for judgment, not understanding.**
+
+This is an AI-powered assistant that helps you make informed decisions about food products through calm, contextual analysis and natural conversation.
+
+## Philosophy
+
+We explain, not judge.
+
+Most food apps give you a red light or green light. We give you context. The same food can fit different lives, goals, and moments. What matters is dose, frequency, role, and trade-offs.
+
+**Core Principles:**
+- **Facts over fear**: No alarmist language or moral judgments about ingredients
+- **Trade-offs over absolutes**: Everything has context—we explain, you decide
+- **Transparency first**: Confidence levels are always explicit (barcode data is authoritative, LLM reasons only)
+- **Practical over perfect**: Real-world guidance, not unrealistic ideals
+- **User autonomy**: You know your life better than we do
+
+**What This Is:**
+- A tool for understanding ingredients and nutritional information
+- A conversational interface that maintains context across questions
+- A system that respects the complexity of food choices
+
+**What This Is NOT:**
+- Not a food rating or scoring system
+- Not a health tracker or calorie counter
+- Not medical advice or a replacement for healthcare professionals
+- Not promoting diet culture or "clean eating" narratives
+- Not a replacement for human judgment or personal context
 
 ## Overview
 
-Food, Explained is an intelligent food analysis application that combines computer vision, external data sources, and large language models to provide contextual information about food products. Users can upload product images or enter barcodes to receive detailed analysis and engage in natural conversations about ingredients, nutritional information, and dietary considerations.
+Food, Explained combines computer vision, external data sources, and large language models to provide contextual information about food products. Upload product images or enter barcodes to receive detailed analysis and engage in natural conversations about ingredients, nutritional information, and dietary considerations.
 
 ## Features
 
@@ -31,6 +58,125 @@ Food, Explained is an intelligent food analysis application that combines comput
 - Dietary goal tracking
 - Restriction management
 - Personalized response generation
+
+## Demo Scenarios
+
+### Flagship: Dietary Restriction Check
+
+**Context**: You're at the grocery store holding a packaged snack. You're vegetarian and lactose intolerant.
+
+**Flow:**
+1. Enter barcode: `737628064502`
+2. System retrieves verified product data (high confidence)
+3. Set preferences: "vegetarian, lactose intolerant"
+4. Ask: "Can I eat this?"
+
+**AI Response:**
+```
+## Short answer
+This product contains milk powder—not suitable for lactose intolerance.
+It is vegetarian (no meat/fish ingredients).
+
+## What to know
+Milk powder appears as the 4th ingredient. For lactose intolerance,
+even small amounts can cause discomfort depending on your sensitivity.
+
+## Trade-off
+If your lactose intolerance is mild, you might tolerate this occasionally.
+If severe, look for explicitly lactose-free alternatives.
+
+## Practical takeaway
+Keep this for non-restricted friends, or try the brand's dairy-free line.
+```
+
+**Follow-up**: "What if I have one occasionally?"
+
+**AI Response:**
+```
+Depends on your sensitivity. Lactose intolerance varies:
+- Some people handle small amounts fine
+- Others react to traces
+
+Since milk powder is mid-list (not the main ingredient), occasional
+consumption might work if you're on the milder end. Pay attention to
+how you feel after one serving.
+
+Not medical advice—trust your body's signals.
+```
+
+**What This Shows:**
+- High-confidence barcode data
+- Preference-aware reasoning
+- No judgment ("bad" vs "good")
+- Practical, dose-aware guidance
+- Honest about uncertainty
+
+---
+
+### Supporting: Ingredient Curiosity
+
+**Context**: You're looking at a beverage with artificial sweeteners.
+
+**Flow:**
+1. Upload label image
+2. System extracts "sucralose" via OCR
+3. Ask: "What's sucralose?"
+
+**AI Response:**
+```
+## Short answer
+Sucralose is an artificial sweetener—much sweeter than sugar, zero calories.
+
+## How it works
+It passes through your body mostly unchanged. Your taste buds detect
+sweetness, but it doesn't spike blood sugar like regular sugar.
+
+## Trade-offs
+- Sweetness without calories (useful for diabetes or weight goals)
+- Some people report digestive discomfort at high doses
+- Doesn't provide energy like sugar
+
+## Practical takeaway
+If you're trying to reduce sugar intake, this is one option. If you
+prefer natural sweeteners, look for stevia or monk fruit instead.
+```
+
+**What This Shows:**
+- OCR-based extraction
+- Calm ingredient explanation
+- Trade-offs without fear
+- Alternative suggestions
+
+---
+
+### Supporting: Comparison Reasoning
+
+**Context**: Deciding between two yogurt brands.
+
+**Flow:**
+1. User describes two products in a question
+2. Ask: "Greek yogurt vs regular yogurt—which is better?"
+
+**AI Response:**
+```
+## Key differences
+Greek yogurt: strained (thicker), higher protein, lower sugar
+Regular yogurt: more liquid, less protein, sometimes more sugar
+
+## What to consider
+If you want more protein → Greek
+If you prefer smoother texture → Regular
+If watching sugar → Check labels (both vary by brand)
+
+## Practical takeaway
+Neither is "better"—depends on your goal. Greek works well for
+breakfast protein, regular works for smoothies or snacks.
+```
+
+**What This Shows:**
+- Comparison without declaring winners
+- Context-dependent reasoning
+- Acknowledges both have valid use cases
 
 ## System Architecture
 
