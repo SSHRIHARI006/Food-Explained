@@ -1,5 +1,5 @@
 from typing import Optional, Dict
-from src.context.schemas import ProductContext, ProductData, ConversationMessage
+from src.context.schemas import ProductContext, ProductData, ConversationMessage, UserPreferences
 from src.context.memory import ConversationMemory
 
 
@@ -27,12 +27,12 @@ def build_context(
     if product_data:
         source = "barcode"
         confidence = "high"
-        raw_text = product_data.get("ingredients_text", "")
+        raw_text = product_data.get("ingredients_text") or ""
         product_obj = ProductData(**product_data)
     elif ocr_text:
         source = "ocr"
         confidence = "medium"
-        raw_text = ocr_text
+        raw_text = ocr_text or ""
         product_obj = None
     else:
         source = "text"
@@ -58,5 +58,5 @@ def build_context(
         user_query=user_query,
         query_type=query_type,
         conversation_history=conversation_history,
-        user_preferences=user_preferences if user_preferences else {}
+        user_preferences=user_preferences if user_preferences else UserPreferences()
     )
