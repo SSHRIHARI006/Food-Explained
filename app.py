@@ -192,9 +192,9 @@ if st.session_state.analyzed:
                 with st.spinner("Thinking..."):
                     answer = reason(context)
                 st.markdown(answer)
-        
-        # Save to memory
-        memory.add_message("user", followup_query)
-        memory.add_message("assistant", answer)
-        
-        st.rerun()
+            
+            # Save to memory
+            memory.add_message("user", followup_query)
+            memory.add_message("assistant", answer)
+            
+            st.rerun()
